@@ -1,0 +1,10 @@
+export { default as Dashboard } from './Dashboard';
+export { default as AllProducts } from './AllProducts';
+export { default as ProductCreate } from './ProductCreate';
+export { default as ProductUpdate } from './ProductUpdate';
+export { default as CategoryList } from './CategoryList';
+export { default as Analytics } from './Analytics';
+export { default as Orders } from './Orders';
+export { default as Reviews } from './Reviews';
+export { default as Users } from './Users';
+export { default as UserEdit } from './UserEdit';
