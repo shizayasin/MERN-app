@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useCreateOrderMutation } from "../../redux/api/orderApiSlice";
 import { clearCart } from "../../redux/features/cart/cartSlice";
 import { toast } from "react-toastify";
-import { formatPrice, STORE_NAME } from "../../constants";
+import PlaceholderImg from "../../assets/placeholder.svg";
+import { formatPrice, STORE_NAME, getAssetUrl } from "../../constants";
 
 export default function PlaceOrder() {
   const dispatch = useDispatch();
@@ -186,7 +187,12 @@ export default function PlaceOrder() {
               <div className="max-h-64 overflow-y-auto divide-y divide-slate-100 pr-1">
                 {cartItems.map((item) => (
                   <div key={item._id} className="flex gap-3 items-center py-2.5 first:pt-0 last:pb-0">
-                    <img src={item.image} alt={item.name} className="w-10 h-10 object-cover rounded-lg border bg-slate-50" />
+                    <img
+                      src={getAssetUrl(item.image || PlaceholderImg)}
+                      alt={item.name}
+                      onError={(e) => { e.currentTarget.src = PlaceholderImg; }}
+                      className="w-10 h-10 object-cover rounded-lg border bg-slate-50"
+                    />
                     <div className="flex-1 min-w-0">
                       <p className="text-xs font-bold text-slate-900 truncate">{item.name}</p>
                       <p className="text-[11px] font-semibold text-slate-400">{item.qty} &times; {formatPrice(item.price)}</p>

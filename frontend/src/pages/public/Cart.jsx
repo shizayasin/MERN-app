@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom"; 
 import { removeFromCart } from "../../redux/features/cart/cartSlice";
 import { showNotice } from "../../redux/features/ui/noticeSlice";
-import { formatPrice } from "../../constants";
+import PlaceholderImg from "../../assets/placeholder.svg";
+import { formatPrice, getAssetUrl } from "../../constants";
 import { useUserCart } from "../../hooks/useUserCart";
 
 const EmptyCartState = () => (
@@ -63,9 +64,9 @@ export default function Cart() {
                   <div className="flex items-center gap-4 min-w-0 flex-1 pr-2"> 
                     <div className="h-16 w-16 bg-slate-50 rounded-xl overflow-hidden border border-slate-100 flex-shrink-0">
                       <img
-                        src={item.image || "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=600"}
+                        src={getAssetUrl(item.image || PlaceholderImg)}
                         alt={item.name}
-                        onError={(e) => { e.currentTarget.src = "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=600"; }}
+                        onError={(e) => { e.currentTarget.src = PlaceholderImg; }}
                         className="w-full h-full object-cover"
                       />
                     </div>

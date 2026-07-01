@@ -83,17 +83,22 @@ export const mergeCartItems = (localItems = [], backendItems = []) => {
       if (!existing.countInStock && normalized.countInStock) {
         existing.countInStock = normalized.countInStock;
       }
-      if (!existing.name && normalized.name) {
+      if (normalized.name) {
         existing.name = normalized.name;
       }
-      if (!existing.price && normalized.price) {
+      if (normalized.price != null) {
         existing.price = normalized.price;
       }
-      if (!existing.image && normalized.image) {
+      if (normalized.image) {
         existing.image = normalized.image;
+      }
+      if (normalized.countInStock != null) {
+        existing.countInStock = normalized.countInStock;
       }
       if (!existing.product || !existing.product._id) {
         existing.product = normalized.product;
+      } else if (normalized.product && normalized.product._id) {
+        existing.product = { ...existing.product, ...normalized.product, _id: normalized.product._id };
       }
     } else {
       merged.set(productId, normalized);

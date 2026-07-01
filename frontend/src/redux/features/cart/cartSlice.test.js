@@ -59,3 +59,16 @@ test("mergeCartItems keeps the higher quantity when the same product exists in b
   assert.equal(merged.length, 1);
   assert.equal(merged[0].qty, 2);
 });
+
+test("mergeCartItems refreshes stale product image and metadata from the latest cart payload", () => {
+  const merged = mergeCartItems(
+    [{ product: { _id: "p1", name: "Old Name", price: 10, image: "/old.jpg" }, qty: 1 }],
+    [{ product: { _id: "p1", name: "New Name", price: 25, image: "/new.jpg" }, qty: 2 }]
+  );
+
+  assert.equal(merged.length, 1);
+  assert.equal(merged[0].name, "New Name");
+  assert.equal(merged[0].price, 25);
+  assert.equal(merged[0].image, "/new.jpg");
+  assert.equal(merged[0].qty, 2);
+});

@@ -1,5 +1,6 @@
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa"; 
-import { formatPrice } from "../../constants";
+import PlaceholderImg from "../../assets/placeholder.svg";
+import { formatPrice, getAssetUrl } from "../../constants";
 import { useUserCart } from "../../hooks/useUserCart";
 
 export default function CartItem({ item }) {
@@ -21,8 +22,9 @@ export default function CartItem({ item }) {
       <div className="flex items-center gap-4 flex-1 min-w-0"> 
         <div className="relative h-18 w-18 min-w-[72px] rounded-xl bg-slate-50 overflow-hidden border border-slate-100">
           <img 
-            src={item.image} 
+            src={getAssetUrl(item.image || PlaceholderImg)} 
             alt={item.name} 
+            onError={(e) => { e.currentTarget.src = PlaceholderImg; }}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
           /> 
         </div>
