@@ -9,6 +9,8 @@ import {
 import { useGetCategoriesQuery } from "../../redux/api/categoryApiSlice";
 import Loader from "../../components/ui/Loader";
 import Message from "../../components/ui/Message";
+import PlaceholderImg from "../../assets/placeholder.svg";
+import { getAssetUrl } from "../../constants";
 
 // ==========================================
 // 1. THE UPDATE FORM COMPONENT (State Management)
@@ -107,7 +109,12 @@ const UpdateForm = ({ product, categories, isUpdating, onUpdate }) => {
           <div className="mb-3 flex items-center gap-3">
             <div className="h-20 w-20 overflow-hidden rounded-2xl bg-slate-100">
               {image ? (
-                <img src={image} alt={name || "Product image"} className="h-full w-full object-cover" />
+                <img
+                  src={getAssetUrl(image || PlaceholderImg)}
+                  alt={name || "Product image"}
+                  onError={(e) => { e.currentTarget.src = PlaceholderImg; }}
+                  className="h-full w-full object-cover"
+                />
               ) : (
                 <div className="flex h-full w-full items-center justify-center text-xs uppercase text-slate-400">No image</div>
               )}

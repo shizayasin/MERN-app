@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify"; 
 import { removeFromFavorites, clearFavorites } from "../../redux/features/favorites/favoritesSlice";
 import { showNotice } from "../../redux/features/ui/noticeSlice";
-import { formatPrice } from "../../constants";
+import PlaceholderImg from "../../assets/placeholder.svg";
+import { formatPrice, getAssetUrl } from "../../constants";
 import { useUserCart } from "../../hooks/useUserCart";
 
 const EmptyWishlistState = () => (
@@ -17,7 +18,7 @@ const EmptyWishlistState = () => (
   </section>
 );
 
-const PLACEHOLDER = "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=600"; 
+const PLACEHOLDER = PlaceholderImg; 
 
 const Favorite = () => { 
   const dispatch = useDispatch();
@@ -72,7 +73,7 @@ const Favorite = () => {
             > 
               <div className="relative aspect-[4/3] bg-slate-50 overflow-hidden border-b border-slate-50">
                 <img 
-                  src={product.image || PLACEHOLDER} 
+                  src={getAssetUrl(product.image || PLACEHOLDER)} 
                   alt={product.name} 
                   onError={(e) => { e.currentTarget.src = PLACEHOLDER; }}
                   className="h-full w-full object-cover group-hover:scale-105 transition duration-500 ease-out" 

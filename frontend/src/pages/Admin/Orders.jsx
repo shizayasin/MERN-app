@@ -138,7 +138,12 @@ export default function Orders() {
                 <div className="divide-y divide-slate-100">
                   {order.orderItems?.map((item, i) => (
                     <div key={i} className="flex gap-4 items-center py-3 first:pt-0 last:pb-0">
-                      <img src={item.image} alt={item.name} className="w-11 h-11 rounded-xl object-cover border bg-slate-50" />
+                      <img
+                        src={getAssetUrl(item.image || PlaceholderImg)}
+                        alt={item.name}
+                        onError={(e) => { e.currentTarget.src = PlaceholderImg; }}
+                        className="w-11 h-11 rounded-xl object-cover border bg-slate-50"
+                      />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-bold text-slate-900 truncate">{item.name}</p>
                         <p className="text-[11px] text-slate-400 font-semibold">{item.qty} units &times; {formatPrice(item.price)}</p>

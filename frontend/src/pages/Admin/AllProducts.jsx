@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { formatPrice, STORE_NAME } from "../../constants";
+import PlaceholderImg from "../../assets/placeholder.svg";
+import { formatPrice, STORE_NAME, getAssetUrl } from "../../constants";
 import { useGetProductsQuery } from "../../redux/api/productApiSlice";
 
 export default function AllProducts() {
@@ -47,7 +48,12 @@ export default function AllProducts() {
             {products.map((p) => (
               <div key={p._id} className="bg-white border border-slate-200/60 rounded-2xl overflow-hidden flex flex-col justify-between group transition hover:border-slate-300">
                 <div className="p-4 space-y-3">
-                  <img src={p.image} alt={p.name} className="w-full h-40 object-cover rounded-xl bg-slate-50" />
+                  <img
+                    src={getAssetUrl(p.image || PlaceholderImg)}
+                    alt={p.name}
+                    onError={(e) => { e.currentTarget.src = PlaceholderImg; }}
+                    className="w-full h-40 object-cover rounded-xl bg-slate-50"
+                  />
                   <div>
                     <div className="flex justify-between items-start gap-2">
                       <h3 className="font-bold text-slate-900 text-sm tracking-tight group-hover:text-slate-700 transition">{p.name}</h3>
