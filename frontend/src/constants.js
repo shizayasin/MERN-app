@@ -9,9 +9,24 @@ export const USERS_URL = "/users";
 export const ORDERS_URL = "/orders";
 export const UPLOAD_URL = "/upload";
 
+const getBackendOrigin = () => {
+  const configuredUrl = import.meta.env?.VITE_API_URL || "";
+  if (!configuredUrl) return "";
+
+  return configuredUrl.replace(/\/api\/?$/i, "");
+};
+
 export const getAssetUrl = (path) => {
   if (!path) return "";
   if (/^https?:\/\//i.test(path)) return path;
+  if (/^data:image\//i.test(path)) return path;
+
+  if (path.startsWith("/uploads/")) {
+    const backendOrigin = getBackendOrigin();
+    if (backendOrigin) return `${backendOrigin}${path}`;
+    return path;
+  }
+
   if (path.startsWith("/")) return `${BASE_URL}${path}`;
   return `${BASE_URL}/${path}`;
 };

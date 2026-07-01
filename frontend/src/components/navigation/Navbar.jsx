@@ -34,9 +34,14 @@ const Navbar = ({ mobileMenuOpen, setMobileMenuOpen, setSidebarCollapsed, cartIt
 
         {/* Cart Badge (Mobile) */}
         <div className="relative">
-          <button className="h-10 w-10 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-center text-slate-700 hover:bg-slate-100 transition-all">
+          <Link
+            to="/cart"
+            className="h-10 w-10 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-center text-slate-700 hover:bg-slate-100 transition-all"
+            title="Shopping Cart"
+            aria-label="Go to cart"
+          >
             <AiOutlineShoppingCart size={20} />
-          </button>
+          </Link>
           {cartItems?.length > 0 && (
             <span className="absolute -top-1 -right-1 h-5 min-w-5 px-1 bg-emerald-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
               {cartItems.reduce((sum, item) => sum + Number(item?.qty || 0), 0)}

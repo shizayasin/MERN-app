@@ -7,6 +7,7 @@ import Loader from "../../components/ui/Loader";
 import Message from "../../components/ui/Message";
 import ProductReviews from "../../components/products/ProductReviews";
 import PlaceholderImg from "../../assets/placeholder.svg";
+import { getAssetUrl } from "../../constants";
 
 const ProductDetails = () => {
   const { id: productId } = useParams();
@@ -57,7 +58,7 @@ const ProductDetails = () => {
           <div className="space-y-4">
             <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-slate-100 shadow-sm">
               <img
-                src={product?.image || PlaceholderImg}
+                src={getAssetUrl(product?.image || PlaceholderImg)}
                 alt={product?.name}
                 className="h-[420px] w-full object-cover"
                 onError={(e) => { e.currentTarget.src = PlaceholderImg; }}
