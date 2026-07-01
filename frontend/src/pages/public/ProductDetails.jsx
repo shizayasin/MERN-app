@@ -7,7 +7,7 @@ import Loader from "../../components/ui/Loader";
 import Message from "../../components/ui/Message";
 import ProductReviews from "../../components/products/ProductReviews";
 import PlaceholderImg from "../../assets/placeholder.svg";
-import { getAssetUrl } from "../../constants";
+import { formatPrice, getAssetUrl } from "../../constants";
 
 const ProductDetails = () => {
   const { id: productId } = useParams();
@@ -81,7 +81,7 @@ const ProductDetails = () => {
               <div className="flex items-center justify-between gap-3">
                 <span className="text-sm uppercase tracking-[0.22em] font-bold text-slate-500">Price</span>
                 <span className="text-3xl font-extrabold tracking-tight text-slate-950">
-                  ${Number(product?.price || 0).toFixed(2)}
+                  {formatPrice(product?.price)}
                 </span>
               </div>
               <div className="flex items-center justify-between gap-3 text-sm text-slate-600">

@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useGetMyOrdersQuery, useGetOrderByIdQuery } from "../../redux/api/orderApiSlice";
 import Loader from "../../components/ui/Loader";
 import Message from "../../components/ui/Message";
-import { STORE_NAME } from "../../constants";
+import { formatPrice, STORE_NAME } from "../../constants";
 
 export default function MyOrder() {
   const { id } = useParams();
@@ -94,11 +94,11 @@ export default function MyOrder() {
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping</span>
-                  <span className="font-semibold text-slate-900">${(order.shippingPrice || 0).toFixed(2)}</span>
+                  <span className="font-semibold text-slate-900">{formatPrice(order.shippingPrice || 0)}</span>
                 </div>
                 <div className="flex justify-between border-t border-slate-200 pt-3 text-base font-semibold text-slate-900">
                   <span>Total</span>
-                  <span>${(order.totalPrice || 0).toFixed(2)}</span>
+                  <span>{formatPrice(order.totalPrice || 0)}</span>
                 </div>
               </div>
             </div>
@@ -124,7 +124,7 @@ export default function MyOrder() {
                     <p className="font-semibold text-slate-900">{item.name}</p>
                     <p className="text-sm text-slate-500">Qty: {item.qty}</p>
                   </div>
-                  <p className="font-semibold text-slate-900">${(item.price * item.qty).toFixed(2)}</p>
+                  <p className="font-semibold text-slate-900">{formatPrice(item.price * item.qty)}</p>
                 </div>
               ))}
             </div>
@@ -155,7 +155,7 @@ export default function MyOrder() {
                   </div>
                   <div className="text-left md:text-right">
                     <p className="text-sm text-slate-500">Total</p>
-                    <p className="font-bold text-emerald-500">${(orderItem.totalPrice || 0).toFixed(2)}</p>
+                    <p className="font-bold text-emerald-500">{formatPrice(orderItem.totalPrice || 0)}</p>
                   </div>
                 </div>
                 <div className="mt-4 flex items-center justify-between">

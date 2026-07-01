@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { STORE_NAME } from "../../constants";
+import { formatPrice, STORE_NAME } from "../../constants";
 import { useGetProductsQuery } from "../../redux/api/productApiSlice";
 
 export default function AllProducts() {
@@ -51,7 +51,7 @@ export default function AllProducts() {
                   <div>
                     <div className="flex justify-between items-start gap-2">
                       <h3 className="font-bold text-slate-900 text-sm tracking-tight group-hover:text-slate-700 transition">{p.name}</h3>
-                      <span className="text-xs font-black text-emerald-600 shrink-0">${p.price}</span>
+                      <span className="text-xs font-black text-emerald-600 shrink-0">{formatPrice(p.price)}</span>
                     </div>
                     <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mt-0.5">{p.brand}</p>
                   </div>

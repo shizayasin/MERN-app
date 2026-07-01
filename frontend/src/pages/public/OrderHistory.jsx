@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useGetMyOrdersQuery } from "../../redux/api/orderApiSlice";
 import Loader from "../../components/ui/Loader";
 import Message from "../../components/ui/Message";
-import { STORE_NAME } from "../../constants";
+import { formatPrice, STORE_NAME } from "../../constants";
 
 export default function OrderHistory() {
   const { data, isLoading, isError, error } = useGetMyOrdersQuery();
@@ -58,7 +58,7 @@ export default function OrderHistory() {
 
                   <div>
                     <p className="text-sm text-slate-500">Total</p>
-                    <p className="text-xl font-bold text-emerald-500">${(order.totalPrice || 0).toFixed(2)}</p>
+                    <p className="text-xl font-bold text-emerald-500">{formatPrice(order.totalPrice || 0)}</p>
                   </div>
 
                   <div className="flex flex-col items-start md:items-end gap-2">

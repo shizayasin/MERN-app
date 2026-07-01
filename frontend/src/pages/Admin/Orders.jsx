@@ -9,6 +9,7 @@ import {
 } from "../../redux/api/orderApiSlice";
 import Loader from "../../components/ui/Loader";
 import Message from "../../components/ui/Message";
+import { formatPrice } from "../../constants";
 
 export default function Orders() {
   const { id } = useParams();
@@ -45,18 +46,18 @@ export default function Orders() {
       await payOrder({
         id: routeId,
         paymentResult: {
-          id: `MOCK_TX_${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
-          status: "SETTLED",
+          id: order.paymentMethod === "BANK" ? txnRef.trim() : `COD-${order._id}`,
+          status: "PAID",
           referenceNotes:
             order.paymentMethod === "BANK"
-              ? `Bank Txn ID: ${txnRef.trim()}`
-              : "Settled via Courier Cash Collection",
+              ? `Bank reference: ${txnRef.trim()}`
+              : "Cash on delivery payment recorded",
         },
       }).unwrap();
-      toast.success("Payment state committed to global node layers.");
+      toast.success("Payment updated successfully.");
       refetch();
     } catch (err) {
-      toast.error(err?.data?.message || "Execution exception occurred during state mutation.");
+      toast.error(err?.data?.message || "Unable to update payment status.");
     }
   };
 
@@ -140,9 +141,9 @@ export default function Orders() {
                       <img src={item.image} alt={item.name} className="w-11 h-11 rounded-xl object-cover border bg-slate-50" />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-bold text-slate-900 truncate">{item.name}</p>
-                        <p className="text-[11px] text-slate-400 font-semibold">{item.qty} units &times; ${item.price}</p>
+                        <p className="text-[11px] text-slate-400 font-semibold">{item.qty} units &times; {formatPrice(item.price)}</p>
                       </div>
-                      <p className="text-xs font-bold text-slate-900">${(item.qty * item.price).toFixed(2)}</p>
+                      <p className="text-xs font-bold text-slate-900">{formatPrice(item.qty * item.price)}</p>
                     </div>
                   ))}
                 </div>
@@ -153,10 +154,10 @@ export default function Orders() {
               <h2 className="text-xs font-extrabold uppercase tracking-wider text-slate-400">Statement Valuation</h2>
               <div className="space-y-2 text-xs border-b border-slate-100 pb-3 font-semibold text-slate-500">
                 <div className="flex justify-between"><span>Method Group</span><span className="text-slate-900 font-bold uppercase">{order.paymentMethod}</span></div>
-                <div className="flex justify-between"><span>Items Raw Price</span><span className="text-slate-900">${order.itemsPrice?.toFixed(2) || "0.00"}</span></div>
-                <div className="flex justify-between"><span>Freight Carriage</span><span className="text-slate-900">${order.shippingPrice?.toFixed(2) || "0.00"}</span></div>
+                <div className="flex justify-between"><span>Items Raw Price</span><span className="text-slate-900">{formatPrice(order.itemsPrice || 0)}</span></div>
+                <div className="flex justify-between"><span>Freight Carriage</span><span className="text-slate-900">{formatPrice(order.shippingPrice || 0)}</span></div>
                 <div className="flex justify-between font-bold text-slate-900 text-sm pt-2 border-t border-dashed">
-                  <span>Net Liabilities</span><span className="text-emerald-600">${order.totalPrice?.toFixed(2) || "0.00"}</span>
+                  <span>Net Liabilities</span><span className="text-emerald-600">{formatPrice(order.totalPrice || 0)}</span>
                 </div>
               </div>
 
@@ -176,7 +177,7 @@ export default function Orders() {
                       </div>
                     )}
                     <button type="submit" disabled={isPaying} className="w-full bg-slate-900 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl text-xs tracking-wide transition shadow-2xs active:scale-[0.98] disabled:opacity-50">
-                      {order.paymentMethod === "BANK" ? "Submit Bank Receipt Trace Reference" : "Simulate Instant COD Delivery Payment"}
+                      {order.paymentMethod === "BANK" ? "Save Bank Reference" : "Confirm Payment"}
                     </button>
                   </form>
                 )}
@@ -236,7 +237,7 @@ export default function Orders() {
                     <tr key={orderId || `${orderItem?.user?.email || "guest"}-${index}`}>
                       <td className="px-4 py-3 text-sm font-semibold text-slate-700">{orderId || "-"}</td>
                       <td className="px-4 py-3 text-sm text-slate-600">{orderItem.user?.username || orderItem.user?.email || "Guest"}</td>
-                      <td className="px-4 py-3 text-sm font-bold text-slate-900">${orderItem.totalPrice?.toFixed(2) || "0.00"}</td>
+                      <td className="px-4 py-3 text-sm font-bold text-slate-900">{formatPrice(orderItem.totalPrice || 0)}</td>
                       <td className="px-4 py-3 text-sm text-slate-600">{orderItem.paymentMethod || "-"}</td>
                       <td className="px-4 py-3">
                         <span className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-black uppercase ${orderItem.isPaid ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>

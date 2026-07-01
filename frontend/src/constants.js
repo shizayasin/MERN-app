@@ -9,6 +9,8 @@ export const USERS_URL = "/users";
 export const ORDERS_URL = "/orders";
 export const UPLOAD_URL = "/upload";
 
+export const formatPrice = (value) => `Rs. ${Number(value || 0).toLocaleString("en-PK")}`;
+
 const getBackendOrigin = () => {
   const configuredUrl = import.meta.env?.VITE_API_URL || "";
   if (!configuredUrl) return "";

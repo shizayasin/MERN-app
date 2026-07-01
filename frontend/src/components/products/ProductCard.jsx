@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { FaStar, FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
 import { toast } from "react-toastify";
 import PlaceholderImg from "../../assets/placeholder.svg";
-import { getAssetUrl } from "../../constants";
+import { formatPrice, getAssetUrl } from "../../constants";
 import { useUserCart } from "../../hooks/useUserCart";
 import { useUserFavorites } from "../../hooks/useUserFavorites";
 
@@ -98,7 +98,7 @@ export default function ProductCard({ product }) {
         <div className="space-y-3 pt-2 border-t border-slate-50">
           <div className="flex justify-between items-baseline"> 
             <span className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight"> 
-              ${Number(product.price).toFixed(2)} 
+              {formatPrice(product.price)} 
             </span> 
             <span className={`text-[11px] font-bold uppercase tracking-wider ${!isOutOfStock ? "text-emerald-600" : "text-slate-400"}`}> 
               {!isOutOfStock ? "In Stock" : "Unavailable"} 

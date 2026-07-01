@@ -1,4 +1,4 @@
-import { STORE_NAME } from "../../constants";
+import { formatPrice, STORE_NAME } from "../../constants";
 import { useGetProductsQuery } from "../../redux/api/productApiSlice";
 import { useGetOrdersQuery } from "../../redux/api/orderApiSlice";
 import { useGetUsersQuery } from "../../redux/api/userApiSlice";
@@ -19,7 +19,7 @@ export default function Analytics() {
     { label: "Products", value: productsCount },
     { label: "Orders", value: ordersCount },
     { label: "Users", value: usersCount },
-    { label: "Revenue", value: `$${totalRevenue.toFixed(2)}` },
+    { label: "Revenue", value: formatPrice(totalRevenue) },
   ];
 
   const chartData = [

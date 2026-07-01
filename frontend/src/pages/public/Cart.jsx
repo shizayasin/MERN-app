@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom"; 
 import { removeFromCart } from "../../redux/features/cart/cartSlice";
 import { showNotice } from "../../redux/features/ui/noticeSlice";
+import { formatPrice } from "../../constants";
 import { useUserCart } from "../../hooks/useUserCart";
 
 const EmptyCartState = () => (
@@ -73,7 +74,7 @@ export default function Cart() {
                         {item.name} 
                       </h2> 
                       <p className="text-xs font-semibold text-slate-400"> 
-                        <span className="text-slate-700">${Number(item.price).toFixed(2)}</span> × {item.qty}
+                        <span className="text-slate-700">{formatPrice(Number(item.price))}</span> × {item.qty}
                       </p> 
                     </div> 
                   </div> 
@@ -106,7 +107,7 @@ export default function Cart() {
                       </button>
                     </div>
                     <span className="text-sm font-extrabold text-slate-900 tracking-tight min-w-[65px] text-right"> 
-                      ${(item.price * item.qty).toFixed(2)} 
+                      {formatPrice(item.price * item.qty)} 
                     </span> 
                     <button 
                       onClick={() => {
@@ -133,7 +134,7 @@ export default function Cart() {
                   Subtotal Items Amount 
                 </span> 
                 <span className="text-xl font-black text-slate-900 tracking-tight"> 
-                  ${total.toFixed(2)} 
+                  {formatPrice(total)} 
                 </span> 
               </div> 
               <p className="text-[11px] font-medium text-slate-400 leading-relaxed">

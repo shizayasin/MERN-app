@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify"; 
 import { removeFromFavorites, clearFavorites } from "../../redux/features/favorites/favoritesSlice";
 import { showNotice } from "../../redux/features/ui/noticeSlice";
+import { formatPrice } from "../../constants";
 import { useUserCart } from "../../hooks/useUserCart";
 
 const EmptyWishlistState = () => (
@@ -85,7 +86,7 @@ const Favorite = () => {
                   </h3> 
                   <div className="flex justify-between items-baseline pt-1">
                     <p className="text-sm font-extrabold text-slate-900 tracking-tight"> 
-                      ${Number(product.price).toFixed(2)} 
+                      {formatPrice(product.price)} 
                     </p> 
                     <span className={`text-[10px] font-bold uppercase tracking-wider ${
                       product.countInStock > 0 ? "text-emerald-600" : "text-slate-400"

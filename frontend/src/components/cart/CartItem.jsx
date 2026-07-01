@@ -1,4 +1,5 @@
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa"; 
+import { formatPrice } from "../../constants";
 import { useUserCart } from "../../hooks/useUserCart";
 
 export default function CartItem({ item }) {
@@ -30,7 +31,7 @@ export default function CartItem({ item }) {
             {item.name} 
           </h3> 
           <p className="text-xs font-semibold text-slate-400"> 
-            ${Number(item.price).toFixed(2)} each
+            {formatPrice(item.price)} each
           </p> 
         </div> 
       </div> 
@@ -61,7 +62,7 @@ export default function CartItem({ item }) {
 
         {/* Aggregated Total Output */} 
         <div className="text-sm font-extrabold text-slate-900 min-w-[70px] text-right tracking-tight"> 
-          ${(item.price * item.qty).toFixed(2)} 
+          {formatPrice(item.price * item.qty)} 
         </div> 
 
         {/* Destructive Item Removal Toggle */} 

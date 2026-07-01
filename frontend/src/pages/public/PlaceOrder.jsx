@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useCreateOrderMutation } from "../../redux/api/orderApiSlice";
 import { clearCart } from "../../redux/features/cart/cartSlice";
 import { toast } from "react-toastify";
-import { STORE_NAME } from "../../constants";
+import { formatPrice, STORE_NAME } from "../../constants";
 
 export default function PlaceOrder() {
   const dispatch = useDispatch();
@@ -189,9 +189,9 @@ export default function PlaceOrder() {
                     <img src={item.image} alt={item.name} className="w-10 h-10 object-cover rounded-lg border bg-slate-50" />
                     <div className="flex-1 min-w-0">
                       <p className="text-xs font-bold text-slate-900 truncate">{item.name}</p>
-                      <p className="text-[11px] font-semibold text-slate-400">{item.qty} &times; ${item.price}</p>
+                      <p className="text-[11px] font-semibold text-slate-400">{item.qty} &times; {formatPrice(item.price)}</p>
                     </div>
-                    <p className="text-xs font-bold text-slate-900">${(item.qty * item.price).toFixed(2)}</p>
+                    <p className="text-xs font-bold text-slate-900">{formatPrice(item.qty * item.price)}</p>
                   </div>
                 ))}
               </div>
@@ -199,15 +199,15 @@ export default function PlaceOrder() {
               <div className="border-t pt-3 space-y-1.5 text-xs font-semibold text-slate-500">
                 <div className="flex justify-between">
                   <span>Cart Elements</span>
-                  <span className="text-slate-800 font-bold">${itemsPrice.toFixed(2)}</span>
+                  <span className="text-slate-800 font-bold">{formatPrice(itemsPrice)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Logistics Courier Carriage</span>
-                  <span className="text-slate-800 font-bold">{shippingPrice === 0 ? "FREE" : `$${shippingPrice.toFixed(2)}`}</span>
+                  <span className="text-slate-800 font-bold">{shippingPrice === 0 ? "FREE" : formatPrice(shippingPrice)}</span>
                 </div>
                 <div className="flex justify-between text-sm font-black text-slate-900 pt-2 border-t border-dashed">
                   <span>Aggregate Liability</span>
-                  <span className="text-emerald-600">${totalPrice.toFixed(2)}</span>
+                  <span className="text-emerald-600">{formatPrice(totalPrice)}</span>
                 </div>
               </div>
             </div>
