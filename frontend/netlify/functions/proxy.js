@@ -35,7 +35,11 @@ export async function handler(event) {
   });
 
   const contentType = response.headers.get("content-type") || "application/json";
-  const body = await response.text();
+  const isBinary = contentType.startsWith("image/") || contentType.startsWith("application/octet-stream");
+  const responseBuffer = await response.arrayBuffer();
+  const body = isBinary
+    ? Buffer.from(responseBuffer).toString("base64")
+    : Buffer.from(responseBuffer).toString("utf-8");
 
   return {
     statusCode: response.status,
@@ -44,5 +48,6 @@ export async function handler(event) {
       "content-type": contentType,
     },
     body,
+    isBase64Encoded: isBinary,
   };
 }

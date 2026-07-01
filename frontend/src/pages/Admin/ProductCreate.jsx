@@ -1,22 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { STORE_NAME } from "../../constants";
-import { useCreateProductMutation } from "../../redux/api/productApiSlice";
+import { STORE_NAME, getAssetUrl } from "../../constants";
+import { useCreateProductMutation, useUploadProductImageMutation } from "../../redux/api/productApiSlice";
 import { useGetCategoriesQuery } from "../../redux/api/categoryApiSlice";
-
-const toBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-  });
 
 export default function ProductCreate() {
   const navigate = useNavigate();
   const { data: categories = [], isLoading: loadingCategories } = useGetCategoriesQuery();
   const [createProduct, { isLoading: creating }] = useCreateProductMutation();
+  const [uploadProductImage, { isLoading: isUploadingImage }] = useUploadProductImageMutation();
 
   const [form, setForm] = useState({
     name: "",
@@ -38,12 +31,26 @@ export default function ProductCreate() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+    const extension = file.name?.split(".").pop()?.toLowerCase();
+    const isAllowed = allowedTypes.includes(file.type) || ["jpg", "jpeg", "png", "webp"].includes(extension);
+
+    if (!isAllowed) {
+      toast.error("Format rejected. Only JPEG, PNG, and WEBP images are allowed!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", file);
+
     try {
-      const base64 = await toBase64(file);
-      setForm((prev) => ({ ...prev, image: base64 }));
-      setPreview(base64);
-    } catch {
-      toast.error("Image conversion failed");
+      const response = await uploadProductImage(formData).unwrap();
+      setForm((prev) => ({ ...prev, image: response.image }));
+      setPreview(response.image);
+      toast.success("Image uploaded successfully");
+    } catch (err) {
+      const message = err?.data?.message || err?.error || "Failed to upload image";
+      toast.error(message);
     }
   };
 
@@ -116,12 +123,12 @@ export default function ProductCreate() {
 
           <div>
             <label className="mb-1 block text-xs font-bold uppercase tracking-wider text-slate-500">Image</label>
-            <input type="file" accept="image/*" onChange={handleImage} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm" />
-            {preview && <img src={preview} alt="Preview" className="mt-3 h-40 w-full rounded-xl object-cover" />}
+            <input type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/jpg,image/png,image/webp" onChange={handleImage} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm" />
+            {preview && <img src={getAssetUrl(preview)} alt="Preview" className="mt-3 h-40 w-full rounded-xl object-cover" />}
           </div>
 
-          <button disabled={creating} className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-600 disabled:opacity-50">
-            {creating ? "Creating product..." : "Create Product"}
+          <button disabled={creating || isUploadingImage} className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-600 disabled:opacity-50">
+            {creating ? "Creating product..." : isUploadingImage ? "Uploading image..." : "Create Product"}
           </button>
         </form>
       </div>

@@ -6,3 +6,8 @@
   from = "/api/*"
   to = "/.netlify/functions/proxy/:splat"
   status = 200
+
+[[redirects]]
+  from = "/uploads/*"
+  to = "/.netlify/functions/proxy/:splat"
+  status = 200
