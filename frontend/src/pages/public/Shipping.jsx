@@ -103,7 +103,17 @@ export default function Shipping() {
               <Input label="Province" name="province" value={form.province} onChange={handleChange} placeholder="Province/State" />
             </div>
             <Input label="Postal Code" name="postalCode" value={form.postalCode} onChange={handleChange} placeholder="e.g. 54000" />
-            <Input label="Country" name="country" value={form.country} onChange={handleChange} placeholder="Your country" />
+            <div>
+              <label className="mb-2 block font-medium text-slate-700">Country</label>
+              <select
+                name="country"
+                value={form.country || "Pakistan"}
+                onChange={handleChange}
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400"
+              >
+                <option value="Pakistan">Pakistan</option>
+              </select>
+            </div>
 
             <button
               type="submit"

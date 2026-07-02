@@ -150,12 +150,12 @@ export default function ReviewOrder() {
                 <p className="font-semibold text-slate-900">
                   {paymentMethod === "COD"
                     ? "Cash on Delivery (COD)"
-                    : "Direct Bank / Wallet Wire"}
+                    : "Direct Bank / Wallet Wire (Coming Soon)"}
                 </p>
                 <p className="text-xs">
                   {paymentMethod === "COD"
                     ? "Pay the delivery agent in cash when your order arrives."
-                    : "Arrange payment via bank transfer or mobile wallet."}
+                    : "This option is currently unavailable and will be enabled soon."}
                 </p>
               </div>
             </div>

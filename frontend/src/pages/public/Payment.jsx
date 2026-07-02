@@ -91,8 +91,8 @@ export default function Payment() {
             <label className="flex cursor-not-allowed items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 opacity-60">
               <input type="radio" disabled />
               <div>
-                <p className="font-medium text-slate-900">Online Payment (Coming Soon)</p>
-                <p className="text-sm text-slate-500">Card / Stripe / JazzCash / Easypaisa</p>
+                <p className="font-medium text-slate-900">Direct Bank / Wallet Wire</p>
+                <p className="text-sm text-slate-500">Coming Soon</p>
               </div>
             </label>
 
