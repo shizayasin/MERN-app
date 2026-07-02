@@ -100,7 +100,7 @@ export default function Payment() {
               type="submit"
               className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 active:scale-[0.98]"
             >
-              Continue to Place Order
+              Continue to Review
               <span aria-hidden="true">→</span>
             </button>
           </form>

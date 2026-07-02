@@ -60,7 +60,7 @@ export default function MyOrder() {
             <div>
               <p className="text-sm font-semibold uppercase tracking-wider text-slate-400">Order Details</p>
               <h1 className="text-2xl font-bold text-slate-900">{STORE_NAME} Order #{order._id}</h1>
-              <p className="mt-1 text-sm text-slate-500">Placed successfully and ready for review.</p>
+              <p className="mt-1 text-sm text-slate-500">Order received and being processed.</p>
             </div>
             <Link
               to="/order-history"
@@ -73,7 +73,7 @@ export default function MyOrder() {
           <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
               <h2 className="text-lg font-semibold text-slate-900">Order Summary</h2>
-              <div className="mt-4 space-y-3 text-sm text-slate-600">
+              <div className="mt-4 space-y-2 text-sm text-slate-600">
                 <div className="flex justify-between">
                   <span>Order ID</span>
                   <span className="font-semibold text-slate-900">{order._id}</span>
@@ -86,20 +86,34 @@ export default function MyOrder() {
                 </div>
                 <div className="flex justify-between">
                   <span>Payment Method</span>
-                  <span className="font-semibold text-slate-900">{order.paymentMethod || "COD"}</span>
+                  <span className="font-semibold text-slate-900">{order.paymentMethod === "COD" ? "Cash on Delivery (COD)" : order.paymentMethod === "BANK" ? "Bank Transfer" : order.paymentMethod || "COD"}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Items</span>
+                  <span>Items Ordered</span>
                   <span className="font-semibold text-slate-900">{order.orderItems?.length || 0}</span>
+                </div>
+              </div>
+              <div className="mt-4 space-y-2 border-t border-slate-200 pt-4 text-sm font-semibold text-slate-600">
+                <div className="flex justify-between">
+                  <span>Subtotal</span>
+                  <span className="text-slate-800">{formatPrice(order.itemsPrice || 0)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Tax</span>
+                  <span className="text-slate-800">{formatPrice(order.taxPrice || 0)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping</span>
-                  <span className="font-semibold text-slate-900">{formatPrice(order.shippingPrice || 0)}</span>
+                  <span className="text-slate-800">{order.shippingPrice === 0 ? "FREE" : formatPrice(order.shippingPrice || 0)}</span>
                 </div>
-                <div className="flex justify-between border-t border-slate-200 pt-3 text-base font-semibold text-slate-900">
+                <div className="flex justify-between text-base font-bold text-slate-900 pt-2 border-t border-slate-200">
                   <span>Total</span>
-                  <span>{formatPrice(order.totalPrice || 0)}</span>
+                  <span className="text-emerald-600">{formatPrice(order.totalPrice || 0)}</span>
                 </div>
+              </div>
+              <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50/50 p-3">
+                <p className="text-xs font-semibold text-emerald-900">📦 Estimated Delivery</p>
+                <p className="text-sm font-bold text-emerald-700 mt-1">3-5 Business Days</p>
               </div>
             </div>
 

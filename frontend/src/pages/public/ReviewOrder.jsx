@@ -175,7 +175,7 @@ export default function ReviewOrder() {
             {/* Items Summary */}
             <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
               <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
-                Order Items ({cartItems.length})
+                Items Ordered ({cartItems.length})
               </h2>
               <div className="max-h-64 overflow-y-auto divide-y divide-slate-100 pr-1 space-y-2">
                 {cartItems.map((item) => (
