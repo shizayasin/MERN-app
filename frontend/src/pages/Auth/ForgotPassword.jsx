@@ -5,14 +5,16 @@ export default function ForgotPassword() {
     <section className="min-h-screen bg-slate-50 px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-md flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
         <div className="mb-6 text-center">
-          <h1 className="text-2xl font-black tracking-tight text-slate-900">Forgot password?</h1>
+          <h1 className="text-2xl font-black tracking-tight text-slate-900">Password Reset Coming Soon</h1>
           <p className="mt-2 text-sm font-medium text-slate-500">
-            Password reset is currently handled through our support team for a smoother checkout experience.
+            We&apos;re currently working on a secure password reset feature.
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm font-medium text-slate-600">
-          Please contact support with your registered email address and we will help you recover access to your account.
+        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm font-medium text-slate-600 space-y-2">
+          <p>If you need help accessing your account, please contact support.</p>
+          <p className="font-semibold text-slate-800">Need immediate help?</p>
+          <p className="text-emerald-700">Contact: support@stylehub.com</p>
         </div>
 
         <Link
