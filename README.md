@@ -1,97 +1,220 @@
-# StyleHub MERN Store
 
-A production-ready MERN e-commerce app with customer shopping flow, admin inventory management, authentication, payments, and file uploads.
+# StyleHub – MERN E-Commerce Store
 
-## What is included
+🚀 A full-stack MERN e-commerce application featuring customer shopping, secure authentication, order management, admin controls, and a modern responsive UI.
 
-- Customer storefront and product browsing
-- Cart, favorites, checkout, and order history
-- Admin dashboard for products, categories, orders, and analytics
-- JWT authentication and protected routes
-- Image upload support and API health checks
+## Live Demo
 
-## Tech stack
+🌐 Frontend: [https://stylehub-official.netlify.app/](https://stylehub-official.netlify.app/)
 
-- Frontend: React, Vite, Redux Toolkit, React Router, Tailwind CSS
-- Backend: Node.js, Express, MongoDB, Mongoose, JWT, Multer
-- Deployment: Netlify for frontend, Railway or any Node host for backend
+## Features
 
-## Local development
+### Customer Features
 
-1. Install dependencies:
+* Browse products by category
+* Product search and filtering
+* Product details page
+* Add to Cart functionality
+* Favorites/Wishlist support
+* Secure user authentication
+* Shipping and checkout flow
+* Review order before placing
+* Order history and tracking
+* Responsive mobile-friendly design
+
+### Admin Features
+
+* Admin dashboard
+* Product management 
+* Category management
+* Order management
+* User management
+* Sales analytics overview
+
+### Security & Backend
+
+* JWT Authentication
+* Protected Routes
+* Role-based Access Control
+* MongoDB Database
+* RESTful API Architecture
+* Image Upload Support
+* API Health Monitoring
+
+---
+
+## Tech Stack
+
+### Frontend
+
+* React
+* Vite
+* Redux Toolkit
+* React Router
+* Tailwind CSS
+* Axios
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* JWT Authentication
+* Multer
+
+### Deployment
+
+* Netlify (Frontend)
+* Railway (Backend)
+* MongoDB Atlas (Database)
+
+---
+
+## Checkout Flow
+
+```text
+Cart
+ ↓
+Shipping
+ ↓
+Payment
+ ↓
+Review Order
+ ↓
+Place Order
+ ↓
+Order Details
+```
+
+---
+
+## Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/yourusername/stylehub.git
+cd stylehub
+```
+
+### Install Dependencies
 
 ```bash
 npm install
 npm run install-all
 ```
 
-2. Create a backend `.env` file in the project root with:
+### Environment Variables
+
+Create a `.env` file in the project root:
 
 ```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=super-long-secret-key-at-least-24-chars
+JWT_SECRET=your_secure_secret_key
 FRONTEND_URL=http://localhost:5173
 CORS_ORIGIN=http://localhost:5173
 NODE_ENV=development
 ```
 
-3. Start both servers:
+---
+
+## Run Locally
+
+Start frontend and backend together:
 
 ```bash
 npm run dev
 ```
 
-This runs the backend with `nodemon` and the frontend with Vite.
+Backend:
 
-## Database seeding
+```bash
+http://localhost:5000
+```
 
-- Seed products only:
+Frontend:
+
+```bash
+http://localhost:5173
+```
+
+---
+
+## Database Seeding
+
+Seed products:
 
 ```bash
 npm run seed:products
 ```
 
-- Seed full demo data (categories, products, users, orders):
+Seed complete demo data:
 
 ```bash
 npm run seed:all
 ```
 
-## Build and test
+---
 
-Build the frontend for production:
+## Production Build
+
+Build frontend:
 
 ```bash
 npm run build
 ```
 
-Run the backend API test script:
+Run backend:
+
+```bash
+npm start
+```
+
+---
+
+## API Testing
 
 ```bash
 node backend/testAPI.mjs
 ```
 
-## Deployment
+---
 
-### Backend
+## Project Highlights
 
-- Start command: `npm start`
-- This runs `node backend/index.js`
-- Set the same environment variables in your host provider
+✅ Full MERN Stack Application
 
-### Frontend
+✅ JWT Authentication & Authorization
 
-- Build command: `npm run build`
-- Publish directory: `frontend/dist`
+✅ Redux Toolkit State Management
 
-### Railway
+✅ Responsive UI for Mobile & Desktop
 
-- Build command: `npm run build`
-- Start command: `npm start`
-- Ensure `MONGO_URI`, `JWT_SECRET`, and any frontend URL/CORS variables are configured in Railway environment settings
+✅ Admin Dashboard & Inventory Management
 
-## Notes
+✅ Complete E-Commerce Checkout Flow
 
-- The root `npm run dev` command is for local development only.
-- Production should use the built frontend assets and the backend start command.
+✅ MongoDB Atlas Integration
+
+✅ Production Deployment Ready
+
+---
+
+## Future Improvements
+
+* Stripe Payment Integration
+* JazzCash & Easypaisa Support
+* Email Notifications
+* Order Tracking Timeline
+* Product Reviews & Ratings
+* Advanced Analytics Dashboard
+
+---
+
+## Author
+
+**Shiza Yaseen**
+
+Built as a full-stack MERN portfolio project to demonstrate modern web development skills using React, Node.js, Express, MongoDB, Redux Toolkit, and Tailwind CSS.
