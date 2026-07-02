@@ -13,6 +13,8 @@ const generateToken = (res, userId) => {
     sameSite: isProduction ? "none" : "lax",
     maxAge: 30 * 24 * 60 * 60 * 1000,
   });
+
+  return token;
 };
 
 export { generateToken };

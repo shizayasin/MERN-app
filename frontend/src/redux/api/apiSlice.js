@@ -4,8 +4,14 @@ import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
 // Netlify proxy deployments, and any reverse-proxy hosting without a hardcoded backend URL.
 const BASE_URL = (import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "");
 
-const prepareHeaders = (headers) => {
+const prepareHeaders = (headers, { getState }) => {
+  const token = getState().auth?.userInfo?.token;
   headers.set("Accept", "application/json");
+
+  if (token) {
+    headers.set("Authorization", `Bearer ${token}`);
+  }
+
   return headers;
 };
 

@@ -29,6 +29,7 @@ export default function Login() {
         email: res?.email || email.trim(),
         isAdmin: Boolean(res?.isAdmin),
         profileImage: res?.profileImage || null,
+        token: res?.token || null,
       };
       dispatch(clearCartLocal());
       dispatch(clearFavoritesLocal());

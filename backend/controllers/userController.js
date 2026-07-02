@@ -34,9 +34,12 @@ const createUser = asyncHandler(async (req, res) => {
       password: hashedPassword,
     });
 
-    generateToken(res, user._id);
+    const token = generateToken(res, user._id);
 
-    res.status(201).json(createFallbackUserPayload(user));
+    res.status(201).json({
+      ...createFallbackUserPayload(user),
+      token,
+    });
   } catch (error) {
     if (isDatabaseUnavailable(error)) {
       generateToken(res, "offline-user");
@@ -64,7 +67,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      generateToken(res, user._id);
+      const token = generateToken(res, user._id);
 
       return res.status(200).json({
         _id: user._id,
@@ -72,6 +75,7 @@ const loginUser = asyncHandler(async (req, res) => {
         email: user.email,
         isAdmin: user.isAdmin,
         profileImage: user.profileImage,
+        token,
       });
     }
 

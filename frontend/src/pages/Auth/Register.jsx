@@ -41,6 +41,7 @@ export default function Register() {
         email: response?.email || email.trim(),
         isAdmin: Boolean(response?.isAdmin),
         profileImage: response?.profileImage || null,
+        token: response?.token || null,
       };
       dispatch(setCredentials(normalizedUser));
       toast.success("Account created successfully. You are now signed in.");
