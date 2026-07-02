@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 export default function Checkout() {
   const shippingAddress = JSON.parse(
-    localStorage.getItem("shippingAddress")
+    localStorage.getItem("shippingAddress") || "null"
   );
   const paymentMethod = localStorage.getItem("paymentMethod");
 
@@ -15,6 +15,6 @@ export default function Checkout() {
     return <Navigate to="/payment" replace />;
   }
 
-  // If everything exists, send them to place order.
-  return <Navigate to="/placeorder" replace />;
+  // If everything exists, send them to review order.
+  return <Navigate to="/review-order" replace />;
 }

@@ -13,25 +13,28 @@ export default function Shipping() {
   const navigate = useNavigate();
   const [form, setForm] = useState(() => {
     if (typeof window === "undefined") {
-      return { address: "", city: "", postalCode: "", country: "" };
+      return { fullName: "", phoneNumber: "", address: "", city: "", province: "", postalCode: "", country: "Pakistan" };
     }
 
     const saved = localStorage.getItem("shippingAddress");
     if (!saved) {
-      return { address: "", city: "", postalCode: "", country: "" };
+      return { fullName: "", phoneNumber: "", address: "", city: "", province: "", postalCode: "", country: "Pakistan" };
     }
 
     try {
       const parsed = JSON.parse(saved);
       return {
+        fullName: parsed.fullName || "",
+        phoneNumber: parsed.phoneNumber || "",
         address: parsed.address || "",
         city: parsed.city || "",
+        province: parsed.province || "",
         postalCode: parsed.postalCode || "",
-        country: parsed.country || "",
+        country: parsed.country || "Pakistan",
       };
     } catch {
       localStorage.removeItem("shippingAddress");
-      return { address: "", city: "", postalCode: "", country: "" };
+      return { fullName: "", phoneNumber: "", address: "", city: "", province: "", postalCode: "", country: "Pakistan" };
     }
   });
 
@@ -41,10 +44,14 @@ export default function Shipping() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const { address, city, postalCode, country } = form;
+    const { fullName, phoneNumber, address, city, province, postalCode, country } = form;
 
-    if (!address.trim() || !city.trim() || !postalCode.trim() || !country.trim()) {
+    if (!fullName.trim() || !phoneNumber.trim() || !address.trim() || !city.trim() || !province.trim() || !postalCode.trim()) {
       return toast.error("Please fill all delivery fields");
+    }
+
+    if (!/^[0-9+\-()\s]{7,15}$/.test(phoneNumber.trim())) {
+      return toast.error("Please enter a valid phone number (7-15 digits)");
     }
 
     if (postalCode.trim().length < 3) {
@@ -52,8 +59,11 @@ export default function Shipping() {
     }
 
     const shippingAddress = {
+      fullName: fullName.trim(),
+      phoneNumber: phoneNumber.trim(),
       address: address.trim(),
       city: city.trim(),
+      province: province.trim(),
       postalCode: postalCode.trim(),
       country: country.trim(),
     };
@@ -85,8 +95,13 @@ export default function Shipping() {
           </div>
 
           <form onSubmit={submitHandler} className="space-y-4">
-            <Input label="Address" name="address" value={form.address} onChange={handleChange} placeholder="Street address" />
-            <Input label="City" name="city" value={form.city} onChange={handleChange} placeholder="Your city" />
+            <Input label="Full Name" name="fullName" value={form.fullName} onChange={handleChange} placeholder="Your full name" />
+            <Input label="Phone Number" name="phoneNumber" value={form.phoneNumber} onChange={handleChange} placeholder="+92 or 0300-..." />
+            <Input label="Street Address" name="address" value={form.address} onChange={handleChange} placeholder="Street address" />
+            <div className="grid grid-cols-2 gap-4">
+              <Input label="City" name="city" value={form.city} onChange={handleChange} placeholder="Your city" />
+              <Input label="Province" name="province" value={form.province} onChange={handleChange} placeholder="Province/State" />
+            </div>
             <Input label="Postal Code" name="postalCode" value={form.postalCode} onChange={handleChange} placeholder="e.g. 54000" />
             <Input label="Country" name="country" value={form.country} onChange={handleChange} placeholder="Your country" />
 

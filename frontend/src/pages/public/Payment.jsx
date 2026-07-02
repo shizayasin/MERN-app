@@ -48,7 +48,7 @@ export default function Payment() {
 
     localStorage.setItem("paymentMethod", method);
     toast.success("Payment method saved");
-    navigate("/placeorder");
+    navigate("/review-order");
   };
 
   return (
@@ -75,7 +75,7 @@ export default function Payment() {
           <div className="mb-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
             <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Delivery address</p>
             <p className="mt-1 font-semibold text-slate-900">
-              {shippingAddress ? `${shippingAddress.address}, ${shippingAddress.city}` : "Complete shipping first"}
+              {shippingAddress ? `${shippingAddress.fullName} • ${shippingAddress.address}, ${shippingAddress.city}` : "Complete shipping first"}
             </p>
           </div>
 

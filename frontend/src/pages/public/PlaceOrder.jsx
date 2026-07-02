@@ -25,6 +25,29 @@ export default function PlaceOrder() {
     paymentMethod: "COD",
   });
 
+  // Pre-fill from localStorage if available (from ReviewOrder flow)
+  useState(() => {
+    const saved = localStorage.getItem("shippingAddress");
+    const savedPayment = localStorage.getItem("paymentMethod");
+    if (saved) {
+      try {
+        const address = JSON.parse(saved);
+        setFormData((prev) => ({
+          ...prev,
+          fullName: address.fullName || "",
+          phoneNumber: address.phoneNumber || "",
+          address: address.address || "",
+          city: address.city || "Lahore",
+          postalCode: address.postalCode || "",
+          province: address.province || "Punjab",
+          paymentMethod: savedPayment || "COD",
+        }));
+      } catch (err) {
+        console.error("Failed to load shipping address:", err);
+      }
+    }
+  }, []);
+
   const handleInputChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -35,7 +58,8 @@ export default function PlaceOrder() {
   }, [cartItems]);
 
   const shippingPrice = itemsPrice > 3000 ? 0 : 250; // Free delivery matching thresholds
-  const totalPrice = itemsPrice + shippingPrice;
+  const taxPrice = Math.round(itemsPrice * 0.05); // 5% tax
+  const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
   const submitOrderHandler = async (e) => {
     e.preventDefault();
@@ -62,6 +86,7 @@ export default function PlaceOrder() {
         },
         paymentMethod: formData.paymentMethod,
         itemsPrice,
+        taxPrice,
         shippingPrice,
         totalPrice,
       }).unwrap();
@@ -206,6 +231,10 @@ export default function PlaceOrder() {
                 <div className="flex justify-between">
                   <span>Cart Elements</span>
                   <span className="text-slate-800 font-bold">{formatPrice(itemsPrice)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Tax (5%)</span>
+                  <span className="text-slate-800 font-bold">{formatPrice(taxPrice)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Logistics Courier Carriage</span>
