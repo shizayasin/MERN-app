@@ -180,18 +180,20 @@ export default function PlaceOrder() {
             <div className="space-y-2 pt-2">
               <label className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">Settlement Channel Selector</label>
               <div className="grid sm:grid-cols-2 gap-3">
-                {[
-                  { id: "COD", label: "Cash On Delivery (COD)", desc: "Pay local courier cash directly upon drop-off." },
-                  { id: "BANK", label: "Direct Bank / Wallet Wire", desc: "Transfer directly to company accounts via mobile clearing." }
-                ].map((p) => (
-                  <label key={p.id} className={`border rounded-xl p-4 flex gap-3 items-start cursor-pointer transition ${formData.paymentMethod === p.id ? "border-slate-950 bg-slate-50/80 ring-2 ring-slate-900/5" : "border-slate-200 hover:bg-slate-50/50"}`}>
-                    <input type="radio" name="paymentMethod" value={p.id} checked={formData.paymentMethod === p.id} onChange={handleInputChange} className="mt-1 accent-slate-950" />
-                    <div>
-                      <p className="text-xs font-bold text-slate-900">{p.label}</p>
-                      <p className="text-[11px] text-slate-400 font-medium mt-0.5">{p.desc}</p>
-                    </div>
-                  </label>
-                ))}
+                <label className={`border rounded-xl p-4 flex gap-3 items-start cursor-pointer transition ${formData.paymentMethod === "COD" ? "border-slate-950 bg-slate-50/80 ring-2 ring-slate-900/5" : "border-slate-200 hover:bg-slate-50/50"}`}>
+                  <input type="radio" name="paymentMethod" value="COD" checked={formData.paymentMethod === "COD"} onChange={handleInputChange} className="mt-1 accent-slate-950" />
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">Cash On Delivery (COD)</p>
+                    <p className="text-[11px] text-slate-400 font-medium mt-0.5">Pay local courier cash directly upon drop-off.</p>
+                  </div>
+                </label>
+                <label className="border rounded-xl p-4 flex gap-3 items-start cursor-not-allowed transition border-slate-200 bg-slate-50 opacity-60">
+                  <input type="radio" disabled className="mt-1" />
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">Direct Bank / Wallet Wire</p>
+                    <p className="text-[11px] text-slate-400 font-medium mt-0.5">Coming Soon</p>
+                  </div>
+                </label>
               </div>
             </div>
 
