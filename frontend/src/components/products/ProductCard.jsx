@@ -14,13 +14,14 @@ const PLACEHOLDER = PlaceholderImg;
 
 export default function ProductCard({ product }) { 
   const { favorites } = useSelector((state) => state.favorites);
-  const { addToCart } = useUserCart();
+  const { cartItems = [], addToCart, removeFromCart } = useUserCart();
   const { addToFavorites, removeFromFavorites } = useUserFavorites();
 
   if (!product) return null; 
 
   const isFavorite = favorites.some((item) => item._id === product._id); 
   const isOutOfStock = product.countInStock < 1;
+  const isInCart = Array.isArray(cartItems) && cartItems.some((item) => (item?.product?._id || item?._id) === product._id);
 
   const addToCartHandler = async (e) => { 
     e.preventDefault();
@@ -31,6 +32,12 @@ export default function ProductCard({ product }) {
 
     await addToCart(product, 1);
   }; 
+
+  const removeFromCartHandler = async (e) => { 
+    e.preventDefault();
+    e.stopPropagation();
+    await removeFromCart(product._id);
+  };
 
   const favoriteHandler = async (e) => { 
     e.preventDefault();
@@ -106,12 +113,16 @@ export default function ProductCard({ product }) {
           </div> 
 
           <button 
-            onClick={addToCartHandler} 
-            disabled={isOutOfStock} 
-            className="w-full bg-slate-900 hover:bg-emerald-600 disabled:bg-slate-100 text-white disabled:text-slate-400 py-3 px-4 rounded-xl font-semibold text-xs sm:text-sm tracking-wide transition-all duration-200 flex items-center justify-center gap-2 shadow-xs active:scale-[0.98]" 
+            onClick={isInCart ? removeFromCartHandler : addToCartHandler} 
+            disabled={isOutOfStock && !isInCart} 
+            className={`w-full py-3 px-4 rounded-xl font-semibold text-xs sm:text-sm tracking-wide transition-all duration-200 flex items-center justify-center gap-2 shadow-xs active:scale-[0.98] ${
+              isInCart
+                ? "bg-rose-50 text-rose-700 hover:bg-rose-100"
+                : "bg-slate-900 hover:bg-emerald-600 disabled:bg-slate-100 text-white disabled:text-slate-400"
+            }`} 
           > 
             <FaShoppingCart size={13} /> 
-            Add to Cart 
+            {isInCart ? "Remove from cart" : "Add to Cart"} 
           </button> 
         </div>
       </div> 

@@ -23,7 +23,7 @@ const PLACEHOLDER = PlaceholderImg;
 const Favorite = () => { 
   const dispatch = useDispatch();
   const { favorites = [] } = useSelector((state) => state.favorites || {});
-  const { addToCart } = useUserCart();
+  const { cartItems = [], addToCart, removeFromCart } = useUserCart();
 
   const addToCartHandler = async (product) => { 
     if (!product) return; 
@@ -32,6 +32,11 @@ const Favorite = () => {
     }
 
     await addToCart(product, 1);
+  }; 
+
+  const removeFromCartHandler = async (productId) => {
+    if (!productId) return;
+    await removeFromCart(productId);
   }; 
 
   if (!Array.isArray(favorites) || !favorites.length) { 
@@ -100,11 +105,22 @@ const Favorite = () => {
                 {/* DOUBLE SUB-ACTION SPLIT CHIP TRIGGERS */} 
                 <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-50"> 
                   <button 
-                    onClick={() => addToCartHandler(product)} 
-                    disabled={product.countInStock < 1} 
-                    className="bg-slate-900 text-white font-bold rounded-xl py-2.5 text-xs hover:bg-emerald-600 disabled:bg-slate-100 disabled:text-slate-300 disabled:cursor-not-allowed transition-all shadow-2xs active:scale-[0.97]" 
+                    onClick={() => {
+                      const isInCart = Array.isArray(cartItems) && cartItems.some((item) => (item?.product?._id || item?._id) === product._id);
+                      if (isInCart) {
+                        removeFromCartHandler(product._id);
+                      } else {
+                        addToCartHandler(product);
+                      }
+                    }} 
+                    disabled={product.countInStock < 1 && !Array.isArray(cartItems) ? false : false} 
+                    className={`font-bold rounded-xl py-2.5 text-xs transition-all shadow-2xs active:scale-[0.97] ${
+                      Array.isArray(cartItems) && cartItems.some((item) => (item?.product?._id || item?._id) === product._id)
+                        ? "bg-rose-50 text-rose-700 hover:bg-rose-100"
+                        : "bg-slate-900 text-white hover:bg-emerald-600"
+                    }`} 
                   > 
-                    Add Cart 
+                    {Array.isArray(cartItems) && cartItems.some((item) => (item?.product?._id || item?._id) === product._id) ? "Remove Cart" : "Add Cart"}
                   </button> 
                   <button 
                     onClick={() => { 

@@ -27,6 +27,7 @@ const Support = lazy(() => import("./pages/public/Support"));
 // ======================= AUTH PAGES =======================
 const Login = lazy(() => import("./pages/Auth/Login"));
 const Register = lazy(() => import("./pages/Auth/Register"));
+const ForgotPassword = lazy(() => import("./pages/Auth/ForgotPassword"));
 
 // ======================= ADMIN PAGES =======================
 const Dashboard = lazy(() => import("./pages/Admin/Dashboard"));
@@ -94,6 +95,7 @@ export default function App() {
           {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
 
           {/* Admin Routes */}
           <Route

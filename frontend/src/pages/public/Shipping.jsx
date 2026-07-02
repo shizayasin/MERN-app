@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { STORE_NAME } from "../../constants";
 
@@ -89,9 +89,16 @@ export default function Shipping() {
         </div>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-          <div className="mb-6 text-center">
+          <div className="mb-6 flex items-center justify-between gap-3">
+            <Link to="/cart" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-emerald-600">
+              <span aria-hidden="true">←</span>
+              Back to cart
+            </Link>
+            <div className="text-center flex-1">
             <h1 className="text-3xl font-bold text-slate-900">{STORE_NAME} - Shipping Address</h1>
-            <p className="mt-1 text-slate-500">Enter your delivery details for a fast and secure checkout.</p>
+              <p className="mt-1 text-slate-500">Enter your delivery details for a fast and secure checkout.</p>
+            </div>
+            <div className="w-20" />
           </div>
 
           <form onSubmit={submitHandler} className="space-y-4">
