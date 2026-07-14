@@ -15,7 +15,6 @@ import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js"; 
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
-// Initialize environment variables cleanly for both local and production (Railway) environments
 dotenv.config();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -24,8 +23,6 @@ const port = process.env.PORT || 5000;
 
 validateEnv();
 
-// ================= MIDDLEWARE =================
-// Compression for faster responses
 app.use(compression());
 
 const allowedOrigins = [
@@ -61,7 +58,6 @@ app.use(express.json({ limit: "10mb" })); // Essential for base64 media strings
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
 
-// Security & Performance Headers
 app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
@@ -71,9 +67,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// ================= ROUTES =================
-
-// Base server check to intercept and resolve standard root page queries 
 app.get("/", (req, res) => {
   res.json({ status: "healthy", message: "API service layer running cleanly." });
 });
@@ -84,7 +77,6 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes); 
 
-// PayPal Configuration Endpoint
 app.get("/api/config/paypal", (req, res) => {
   const paypalClientId = process.env.PAYPAL_CLIENT_ID;
   
@@ -106,7 +98,6 @@ app.get("/api/config/paypal", (req, res) => {
   });
 });
 
-// Health check endpoint
 app.get("/api/health", (req, res) => {
   res.json({ 
     status: "healthy", 
@@ -116,7 +107,6 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// ================= STATIC FILES DISCOVERY =================
 app.use("/uploads", express.static(path.resolve(__dirname, "../uploads"), {
   maxAge: process.env.NODE_ENV === "production" ? "1d" : "1h",
   etag: false,
@@ -128,11 +118,9 @@ app.use("/uploads", express.static(path.resolve(__dirname, "./uploads"), {
   fallthrough: true
 }));
 
-// ================= ERROR HANDLERS =================
 app.use(notFound);
 app.use(errorHandler);
 
-// ================= SERVER START (Moved to bottom) =================
 const start = async () => {
   await connectDB();
 
