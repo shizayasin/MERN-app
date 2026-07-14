@@ -4,8 +4,6 @@ import Product from "../models/productModel.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import { isDatabaseUnavailable } from "../utils/dbFallback.js";
 
-// @desc Create new complex order record
-// @route POST /api/orders
 const addOrderItems = asyncHandler(async (req, res) => {
   const { 
     orderItems, 
@@ -21,7 +19,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
     throw new Error("Your cart contains no items.");
   }
 
-  // Guard rails against unauthorized execution paths
   if (!req.user) {
     res.status(401);
     throw new Error("User identity footprint missing from state context.");
@@ -40,7 +37,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
       };
     });
 
-    // Deduct stock using safe atomic queries
     for (const item of normalizedOrderItems) {
       const productId = item.product;
 
@@ -49,7 +45,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
         throw new Error("A target item node is missing structural identification attributes.");
       }
 
-      // Fetch product to check current stock
       const product = await Product.findById(productId);
       
       if (!product) {
@@ -64,7 +59,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
         );
       }
 
-      // Updated option syntax removes the Mongoose deprecation warning
       const updatedProd = await Product.findOneAndUpdate(
         { _id: productId, countInStock: { $gte: Number(item.qty) } },
         { $inc: { countInStock: -Number(item.qty) } },
@@ -77,7 +71,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
       }
     }
 
-    // Build order document matching the schema definitions safely
     const order = new Order({
       user: req.user._id,
       orderItems: normalizedOrderItems,
@@ -122,8 +115,6 @@ const buildOfflineOrderPayload = (id, userId) => ({
   message: "Order data is currently unavailable while the database is offline.",
 });
 
-// @desc Get logged-in user order records
-// @route GET /api/orders/myorders
 const getMyOrders = asyncHandler(async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id })
@@ -140,8 +131,6 @@ const getMyOrders = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Get order profile metrics by ID
-// @route GET /api/orders/:id
 const getOrderById = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
@@ -170,8 +159,6 @@ const getOrderById = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Process transaction payment status confirmation
-// @route PUT /api/orders/:id/pay
 const payOrder = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
@@ -189,7 +176,6 @@ const payOrder = asyncHandler(async (req, res) => {
   order.isPaid = true;
   order.paidAt = new Date();
   
-  // Clean structure matching flattened payload from frontend mutation updates
   order.paymentResult = {
     id: req.body.id,
     status: req.body.status || "COMPLETED",
@@ -201,8 +187,6 @@ const payOrder = asyncHandler(async (req, res) => {
   res.json(updatedOrder);
 });
 
-// @desc Admin: View system orders index
-// @route GET /api/orders
 const getOrders = asyncHandler(async (req, res) => {
   try {
     const orders = await Order.find({})

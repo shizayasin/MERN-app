@@ -14,12 +14,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const resolveUploadDir = () => path.resolve(__dirname, "../../uploads");
 const uploadDir = resolveUploadDir();
 
-// Ensure the upload folder exists before saving any file
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Configure storage engine destinations & filenames
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadDir);
@@ -30,7 +28,6 @@ const storage = multer.diskStorage({
   },
 });
 
-// Validate file types (Images only)
 const fileFilter = (req, file, cb) => {
   if (isAllowedImageFile(file)) {
     cb(null, true);
@@ -43,7 +40,6 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage, fileFilter });
 const uploadSingleImage = upload.single("image");
 
-// Generic image upload route
 router.post("/", (req, res) => {
   uploadSingleImage(req, res, (err) => {
     if (err) {
@@ -57,7 +53,6 @@ router.post("/", (req, res) => {
     const savedFilename = path.basename(req.file.path);
     const publicImagePath = `/uploads/${savedFilename}`;
 
-    // Return the clean static asset path back to the frontend
     res.status(200).json({
       message: "Image uploaded successfully",
       image: publicImagePath,
@@ -65,7 +60,6 @@ router.post("/", (req, res) => {
   });
 });
 
-// Profile image upload route (authenticated user)
 router.post(
   "/profile",
   authenticate,
@@ -83,7 +77,6 @@ router.post(
       const publicImagePath = `/uploads/${savedFilename}`;
 
       try {
-        // Update user's profile image
         const user = await User.findByIdAndUpdate(
           req.user._id,
           { profileImage: publicImagePath },

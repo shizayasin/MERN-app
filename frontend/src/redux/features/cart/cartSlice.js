@@ -20,7 +20,6 @@ const persistCartItems = (cartItems) => {
   try {
     window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
   } catch {
-    // ignore storage errors
   }
 };
 

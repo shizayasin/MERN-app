@@ -3,8 +3,6 @@ import { CATEGORIES_URL } from "../../constants";
 
 export const categoryApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    
-    // GET ALL CATEGORIES
     getCategories: builder.query({
       query: () => CATEGORIES_URL,
       refetchOnMountOrArgChange: true,
@@ -17,7 +15,6 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
           : [{ type: "Category", id: "LIST" }],
     }),
 
-    // CREATE A NEW CATEGORY
     createCategory: builder.mutation({
       query: (data) => ({
         url: CATEGORIES_URL,
@@ -27,7 +24,6 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: [{ type: "Category", id: "LIST" }],
     }),
 
-    // UPDATE CATEGORY BY ID
     updateCategory: builder.mutation({
       query: ({ id, ...data }) => ({
         url: `${CATEGORIES_URL}/${id}`,
@@ -40,7 +36,6 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
       ],
     }),
 
-    // DELETE CATEGORY BY ID
     deleteCategory: builder.mutation({
       query: (id) => ({
         url: `${CATEGORIES_URL}/${id}`,

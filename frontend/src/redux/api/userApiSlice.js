@@ -74,7 +74,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Users"],
     }),
-    // Cart endpoints
     getCart: builder.query({
       query: (userId) => ({
         url: `${USERS_URL}/cart`,
@@ -114,7 +113,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Cart"],
     }),
-    // Favorites endpoints
     getFavorites: builder.query({
       query: (userId) => ({
         url: `${USERS_URL}/favorites`,

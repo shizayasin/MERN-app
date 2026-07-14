@@ -14,8 +14,7 @@ const normalizeMongoUri = (mongoUri) => {
       return parsed.toString();
     }
   } catch {
-    // Fall back to the original URI if parsing fails.
-  }
+
 
   return mongoUri;
 };

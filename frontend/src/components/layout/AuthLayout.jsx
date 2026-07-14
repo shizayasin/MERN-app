@@ -2,15 +2,14 @@ import { Link } from "react-router-dom";
 import Logo from "../../assets/Logo.png";
 const AuthLayout = ({ title, subtitle, children }) => {
   return (
-    /* FIXED: Flex container wrapped inside safety margin boundaries to perfectly fit app workspace windows */
     <div className="w-full min-h-screen bg-slate-50/30 px-2 sm:px-4 md:px-6 py-4 flex items-center justify-center">
       
       <section className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 bg-white rounded-3xl border border-slate-200/60 overflow-hidden shadow-xs min-h-[600px] lg:min-h-[700px]">
         
-        {/* ===================== LEFT SIDE: AUTH FORM COLLATERALS ===================== */}
+        
         <div className="flex flex-col justify-between col-span-1 lg:col-span-5 xl:col-span-4 p-6 sm:p-8 md:p-10 bg-white">
           
-          {/* Top Brand Marker Header */}
+        
           <div className="flex items-center gap-2.5">
             <Link to="/" className="flex items-center gap-2.5 group">
               <img src={Logo} alt="StyleHub" className="h-6 w-6 object-contain transition-transform group-hover:rotate-6" />

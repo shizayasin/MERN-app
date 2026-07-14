@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import Layout from "./components/layout/Layout";
 import Loader from "./components/ui/Loader";
 
-// ======================= PUBLIC PAGES =======================
 const Home = lazy(() => import("./pages/public/Home"));
 const Shop = lazy(() => import("./pages/public/Shop"));
 const Cart = lazy(() => import("./pages/public/Cart"));
@@ -24,12 +23,10 @@ const PrivacyPolicy = lazy(() => import("./pages/public/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/public/TermsOfService"));
 const Support = lazy(() => import("./pages/public/Support"));
 
-// ======================= AUTH PAGES =======================
 const Login = lazy(() => import("./pages/Auth/Login"));
 const Register = lazy(() => import("./pages/Auth/Register"));
 const ForgotPassword = lazy(() => import("./pages/Auth/ForgotPassword"));
 
-// ======================= ADMIN PAGES =======================
 const Dashboard = lazy(() => import("./pages/Admin/Dashboard"));
 const Products = lazy(() => import("./pages/Admin/AllProducts"));
 const ProductCreate = lazy(() => import("./pages/Admin/ProductCreate"));
@@ -41,7 +38,6 @@ const Reviews = lazy(() => import("./pages/Admin/Reviews"));
 const Users = lazy(() => import("./pages/Admin/Users"));
 const UserEdit = lazy(() => import("./pages/Admin/UserEdit"));
 
-// 404 Page
 const NotFound = () => (
   <div className="min-h-screen flex flex-col items-center justify-center text-slate-800 space-y-2">
     <h1 className="text-4xl font-black tracking-tight text-slate-900">
@@ -53,7 +49,6 @@ const NotFound = () => (
   </div>
 );
 
-// Admin Route Protection
 const AdminRoute = ({ children }) => {
   const { userInfo } = useSelector((state) => state.auth);
 

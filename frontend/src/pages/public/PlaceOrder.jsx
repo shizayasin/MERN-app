@@ -13,7 +13,6 @@ export default function PlaceOrder() {
   const [createOrder, { isLoading }] = useCreateOrderMutation();
   const { cartItems } = useSelector((state) => state.cart);
 
-  // Deep structural local state form tracking
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
@@ -25,7 +24,6 @@ export default function PlaceOrder() {
     paymentMethod: "COD",
   });
 
-  // Pre-fill from localStorage if available (from ReviewOrder flow)
   useState(() => {
     const saved = localStorage.getItem("shippingAddress");
     const savedPayment = localStorage.getItem("paymentMethod");
@@ -52,7 +50,6 @@ export default function PlaceOrder() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // Math Calculations Matrix
   const itemsPrice = useMemo(() => {
     return cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
   }, [cartItems]);
@@ -109,7 +106,6 @@ export default function PlaceOrder() {
     <section className="min-h-screen bg-slate-50/60 px-4 sm:px-6 lg:px-8 py-10 text-slate-800">
       <div className="max-w-6xl mx-auto space-y-6">
         
-        {/* HEADER BRAND */}
         <div className="bg-white border border-slate-200/50 rounded-2xl p-6 shadow-xs">
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight uppercase">
             {STORE_NAME} &bull; Checkout Interface
@@ -121,7 +117,6 @@ export default function PlaceOrder() {
 
         <div className="grid lg:grid-cols-3 gap-6 items-start">
           
-          {/* THE LOGISTICS INPUT FORM */}
           <form onSubmit={submitOrderHandler} className="lg:col-span-2 bg-white border border-slate-200/50 rounded-2xl p-6 space-y-5 shadow-xs">
             <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b pb-2 border-slate-100">
               Shipping & Customer Logistics Address

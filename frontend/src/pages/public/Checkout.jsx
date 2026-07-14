@@ -5,16 +5,13 @@ export default function Checkout() {
   );
   const paymentMethod = localStorage.getItem("paymentMethod");
 
-  // If the user didn't fill shipping details, send them back.
   if (!shippingAddress) {
     return <Navigate to="/shipping" replace />;
   }
 
-  // If shipping exists but payment is missing, go to payment.
   if (!paymentMethod) {
     return <Navigate to="/payment" replace />;
   }
 
-  // If everything exists, send them to review order.
   return <Navigate to="/review-order" replace />;
 }

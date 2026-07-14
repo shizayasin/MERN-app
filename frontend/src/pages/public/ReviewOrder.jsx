@@ -16,7 +16,6 @@ export default function ReviewOrder() {
   const { cartItems } = useSelector((state) => state.cart);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Retrieve saved data from localStorage
   const [shippingAddress] = useState(() => {
     const saved = localStorage.getItem("shippingAddress");
     if (!saved) return null;
@@ -29,7 +28,6 @@ export default function ReviewOrder() {
 
   const [paymentMethod] = useState(() => localStorage.getItem("paymentMethod") || "COD");
 
-  // Calculate pricing
   const itemsPrice = useMemo(() => {
     return cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
   }, [cartItems]);
@@ -38,7 +36,6 @@ export default function ReviewOrder() {
   const taxPrice = Math.round(itemsPrice * 0.05); // 5% tax
   const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
-  // Calculate estimated delivery
   const getEstimatedDelivery = () => {
     const today = new Date();
     const minDays = 3;
@@ -52,7 +49,6 @@ export default function ReviewOrder() {
     return `${deliveryStart.toLocaleDateString("en-US", options)} - ${deliveryEnd.toLocaleDateString("en-US", options)}`;
   };
 
-  // Validation
   if (!shippingAddress) {
     setTimeout(() => navigate("/shipping"), 100);
     return null;
@@ -66,7 +62,6 @@ export default function ReviewOrder() {
   const handlePlaceOrder = async () => {
     setIsProcessing(true);
     try {
-      // Navigate to PlaceOrder with all data prepared
       navigate("/placeorder");
     } catch (err) {
       toast.error("An error occurred. Please try again.");

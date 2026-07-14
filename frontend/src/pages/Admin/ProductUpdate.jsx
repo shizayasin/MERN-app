@@ -12,9 +12,6 @@ import Message from "../../components/ui/Message";
 import PlaceholderImg from "../../assets/placeholder.svg";
 import { getAssetUrl } from "../../constants";
 
-// ==========================================
-// 1. THE UPDATE FORM COMPONENT (State Management)
-// ==========================================
 const UpdateForm = ({ product, categories, isUpdating, onUpdate }) => {
   const categoryValue =
     typeof product.category === "object"
@@ -199,9 +196,6 @@ const UpdateForm = ({ product, categories, isUpdating, onUpdate }) => {
   );
 };
 
-// ==========================================
-// 2. THE MAIN CONTROLLER COMPONENT (Data Fetching)
-// ==========================================
 const ProductUpdate = () => {
   const { id: productId } = useParams();
   const navigate = useNavigate();
@@ -229,10 +223,6 @@ const ProductUpdate = () => {
           Modify Product Profile Registry
         </h1>
 
-        {/* CRITICAL FIX: Providing a unique `key` ensures React mounts the form 
-          EXACTLY when the product data is ready, initializing state instantly 
-          and eliminating the cascading re-render effect entirely!
-        */}
         {product && (
           <UpdateForm 
             key={product._id} 

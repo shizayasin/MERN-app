@@ -5,9 +5,6 @@ import { generateToken } from "../utils/createToken.js";
 import bcrypt from "bcryptjs";
 import { createFallbackUserPayload, isDatabaseUnavailable } from "../utils/dbFallback.js";
 
-/* =========================
-   REGISTER USER
-========================= */
 const createUser = asyncHandler(async (req, res) => {
   let { username, email, password } = req.body;
 
@@ -55,9 +52,6 @@ const createUser = asyncHandler(async (req, res) => {
   }
 });
 
-/* =========================
-   LOGIN USER
-========================= */
 const loginUser = asyncHandler(async (req, res) => {
   let { email, password } = req.body;
 
@@ -96,9 +90,6 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-/* =========================
-   LOGOUT USER
-========================= */
 const logoutCurrentUser = asyncHandler(async (req, res) => {
   const isProduction = process.env.NODE_ENV === "production";
 
@@ -112,9 +103,6 @@ const logoutCurrentUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-/* =========================
-   GET ALL USERS (ADMIN)
-========================= */
 const getAllUsers = asyncHandler(async (req, res) => {
   const users = await User.find({}).select("-password");
 
@@ -124,9 +112,6 @@ const getAllUsers = asyncHandler(async (req, res) => {
   });
 });
 
-/* =========================
-   GET CURRENT USER
-========================= */
 const getCurrentUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
     .select("-password")
@@ -141,9 +126,6 @@ const getCurrentUserProfile = asyncHandler(async (req, res) => {
   res.status(200).json(user);
 });
 
-/* =========================
-   UPDATE CURRENT USER PROFILE
-========================= */
 const updateCurrentUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
@@ -171,7 +153,6 @@ const updateCurrentUserProfile = asyncHandler(async (req, res) => {
     user.password = await bcrypt.hash(password, 10);
   }
 
-  // Update profile fields
   if (phone !== undefined) user.phone = phone;
   if (address !== undefined) user.address = address;
   if (city !== undefined) user.city = city;
@@ -195,9 +176,6 @@ const updateCurrentUserProfile = asyncHandler(async (req, res) => {
   });
 });
 
-/* =========================
-   DELETE USER (ADMIN)
-========================= */
 const deleteUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
@@ -218,9 +196,6 @@ const deleteUserById = asyncHandler(async (req, res) => {
   });
 });
 
-/* =========================
-   GET USER BY ID (ADMIN)
-========================= */
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id).select("-password");
 
@@ -232,9 +207,6 @@ const getUserById = asyncHandler(async (req, res) => {
   res.status(200).json(user);
 });
 
-/* =========================
-   UPDATE USER BY ID (ADMIN)
-========================= */
 const updateUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
@@ -267,11 +239,6 @@ const updateUserById = asyncHandler(async (req, res) => {
   });
 });
 
-/* =========================
-   CART MANAGEMENT
-========================= */
-
-// Get user cart
 const getUserCart = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
     .select("cartItems")
@@ -285,7 +252,6 @@ const getUserCart = asyncHandler(async (req, res) => {
   res.status(200).json(user.cartItems);
 });
 
-// Add to cart
 const addToCart = asyncHandler(async (req, res) => {
   const { productId, qty } = req.body;
   const user = await User.findById(req.user._id);
@@ -326,7 +292,6 @@ const addToCart = asyncHandler(async (req, res) => {
   res.status(200).json(updatedUser.cartItems);
 });
 
-// Remove from cart
 const removeFromCart = asyncHandler(async (req, res) => {
   const { productId } = req.body;
   const user = await User.findById(req.user._id);
@@ -346,7 +311,6 @@ const removeFromCart = asyncHandler(async (req, res) => {
   res.status(200).json(updatedUser.cartItems);
 });
 
-// Update cart item quantity
 const updateCartItem = asyncHandler(async (req, res) => {
   const { productId, qty } = req.body;
   const user = await User.findById(req.user._id);
@@ -385,7 +349,6 @@ const updateCartItem = asyncHandler(async (req, res) => {
   res.status(200).json(updatedUser.cartItems);
 });
 
-// Clear cart
 const clearCart = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
@@ -400,11 +363,6 @@ const clearCart = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Cart cleared successfully" });
 });
 
-/* =========================
-   FAVORITES/WISHLIST MANAGEMENT
-========================= */
-
-// Get user favorites
 const getUserFavorites = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
     .select("favorites")
@@ -418,7 +376,6 @@ const getUserFavorites = asyncHandler(async (req, res) => {
   res.status(200).json(user.favorites);
 });
 
-// Add to favorites
 const addToFavorites = asyncHandler(async (req, res) => {
   const { productId } = req.body;
   const user = await User.findById(req.user._id);
@@ -441,7 +398,6 @@ const addToFavorites = asyncHandler(async (req, res) => {
   res.status(200).json(updatedUser.favorites);
 });
 
-// Remove from favorites
 const removeFromFavorites = asyncHandler(async (req, res) => {
   const { productId } = req.body;
   const user = await User.findById(req.user._id);

@@ -322,7 +322,6 @@ const Profile = () => {
   ); 
 }; 
 
-/* ================= COMPONENT: HOVER INPUT ================= */ 
 const Input = ({ icon, label, ...props }) => ( 
   <div className="space-y-1.5"> 
     <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide"> 
@@ -340,7 +339,6 @@ const Input = ({ icon, label, ...props }) => (
   </div> 
 ); 
 
-/* ================= COMPONENT: PASSWORD FIELD ================= */ 
 const PasswordField = ({ label, visible, setVisible, ...props }) => ( 
   <div className="space-y-1.5"> 
     <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide"> 
@@ -363,7 +361,6 @@ const PasswordField = ({ label, visible, setVisible, ...props }) => (
   </div> 
 ); 
 
-/* ================= COMPONENT: STAT CARD TILE ================= */ 
 const StatCard = ({ icon, title, value }) => ( 
   <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50/80 border border-slate-100"> 
     <div className="flex items-center gap-3 text-xs font-bold text-slate-500 uppercase tracking-wide"> 

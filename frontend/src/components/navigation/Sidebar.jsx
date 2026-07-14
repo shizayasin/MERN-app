@@ -185,7 +185,6 @@ const Sidebar = ({
             )}
           </div>
         ) : (
-          /* Guest Access Layout Configuration */
           <div className="space-y-1">
             <NavLink
               to="/login"

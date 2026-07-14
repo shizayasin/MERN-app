@@ -12,16 +12,13 @@ const Shop = () => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  // Parse state parameters directly during the render phase
   const queryParams = new URLSearchParams(location.search);
   const categoryFilter = queryParams.get("category") || "";
 
-  // Dynamic local UI states
   const [pageNumber, setPageNumber] = useState(1); 
   const [searchTerm, setSearchTerm] = useState(""); 
   const [sortOption, setSortOption] = useState(""); 
 
-  // Inline Search Input Debouncing Engine
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
   useEffect(() => {
@@ -57,7 +54,6 @@ const Shop = () => {
     <section className="min-h-screen bg-slate-50/60 px-4 sm:px-6 lg:px-8 py-8 text-slate-800"> 
       <div className="max-w-7xl mx-auto"> 
         
-        {/* HEADER */} 
         <div className="mb-8 pb-4 border-b border-slate-200/60 flex flex-col md:flex-row md:items-end justify-between gap-4"> 
           <div>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight uppercase"> 
@@ -74,7 +70,6 @@ const Shop = () => {
           )}
         </div> 
 
-        {/* SEARCH & FILTERS PANEL */} 
         <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/50 shadow-xs mb-6 space-y-4"> 
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="relative flex-1 group"> 

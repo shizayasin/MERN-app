@@ -5,7 +5,6 @@ import asyncHandler from "../middlewares/asyncHandler.js";
 import { calculateRatingSummary, removeReviewAndRecalculate } from "../utils/reviewUtils.js";
 import { getFallbackProductsPayload, isDatabaseUnavailable } from "../utils/dbFallback.js";
 
-// GET ALL PRODUCTS
 const getProducts = asyncHandler(async (req, res) => {
   try {
     const pageSize = Number(req.query.pageSize) || 12;
@@ -91,7 +90,6 @@ const getProducts = asyncHandler(async (req, res) => {
   }
 });
 
-// GET SINGLE PRODUCT
 const getProductById = asyncHandler(async (req, res) => {
   try {
     const product = await Product.findById(req.params.id).populate(
@@ -115,7 +113,6 @@ const getProductById = asyncHandler(async (req, res) => {
   }
 });
 
-// CREATE REVIEW
 const createProductReview = asyncHandler(async (req, res) => {
   const { rating, comment } = req.body;
   const product = await Product.findById(req.params.id);
@@ -149,7 +146,6 @@ const createProductReview = asyncHandler(async (req, res) => {
   res.status(201).json(updatedProduct);
 });
 
-// REMOVE A REVIEW
 const removeProductReview = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
@@ -176,7 +172,6 @@ const removeProductReview = asyncHandler(async (req, res) => {
   res.json(updatedProduct);
 });
 
-// CREATE PRODUCT
 const createProduct = asyncHandler(async (req, res) => {
   const {
     name,
@@ -224,7 +219,6 @@ const createProduct = asyncHandler(async (req, res) => {
   res.status(201).json(created);
 });
 
-// UPDATE PRODUCT
 const updateProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
@@ -250,7 +244,6 @@ const updateProduct = asyncHandler(async (req, res) => {
   res.json(populated);
 });
 
-// DELETE PRODUCT
 const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 

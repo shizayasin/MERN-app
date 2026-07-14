@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
-    // Profile Information
     profileImage: {
       type: String,
       default: null,
@@ -45,7 +44,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    // User-specific data
     cartItems: [
       {
         product: {

@@ -20,7 +20,6 @@ const persistFavorites = (favorites) => {
   try {
     window.localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites));
   } catch {
-    // ignore storage errors
   }
 };
 

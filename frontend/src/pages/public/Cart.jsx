@@ -32,8 +32,6 @@ export default function Cart() {
   return ( 
     <section className="min-h-screen bg-slate-50/60 px-4 sm:px-6 lg:px-8 py-8 text-slate-800"> 
       <div className="max-w-5xl mx-auto"> 
-        
-        {/* HEADER INFORMATION SEGMENT */} 
         <div className="mb-8 pb-4 border-b border-slate-200/60">
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight uppercase"> 
             Shopping Basket 
@@ -43,14 +41,10 @@ export default function Cart() {
           </p> 
         </div>
 
-        {/* COMPREHENSIVE EMPTY CART PLACEHOLDER STATE */} 
         {normalizedCartItems.length === 0 ? ( 
           <EmptyCartState />
         ) : ( 
-          /* TWO COLUMN CORE CHECKOUT ARCHITECTURE LAYOUT */
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start"> 
-            
-            {/* LEFT: CART SELECTION ITEM LIST PANEL */} 
             <div className="space-y-3 lg:col-span-2"> 
               {normalizedCartItems.map((item) => {
                 const stock = Number(item?.countInStock ?? item?.product?.countInStock ?? 0);

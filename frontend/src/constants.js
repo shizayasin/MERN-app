@@ -1,7 +1,5 @@
-// frontend/src/constants.js
-
 export const STORE_NAME = "StyleHub";
-export const BASE_URL = ""; // Leave blank if relying on Vite proxy, or "http://localhost:5000"
+export const BASE_URL = "";
 
 export const PRODUCTS_URL = "/products";
 export const CATEGORIES_URL = "/categories";
