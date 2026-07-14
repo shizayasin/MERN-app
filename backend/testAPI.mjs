@@ -19,17 +19,14 @@ const tests = {
   async testProductCRUD() {
     console.log("\n📦 TESTING PRODUCT CRUD OPERATIONS");
     try {
-      // GET all products
       const getRes = await axios.get(`${API_URL}/products`);
       tests.log("GET all products", getRes.status === 200 && getRes.data.products.length > 0, `${getRes.data.products.length} products found`);
 
-      // GET single product
       if (getRes.data.products.length > 0) {
         const productId = getRes.data.products[0]._id;
         const singleRes = await axios.get(`${API_URL}/products/${productId}`);
         tests.log("GET single product", singleRes.status === 200, `Product: ${singleRes.data.name}`);
 
-        // Test search
         const searchRes = await axios.get(`${API_URL}/products?keyword=wireless`);
         tests.log("Search products", searchRes.status === 200, `${searchRes.data.products.length} results found`);
       }
@@ -51,7 +48,6 @@ const tests = {
   async testUserAuth() {
     console.log("\n👤 TESTING USER AUTHENTICATION");
     try {
-      // Register
       const registerRes = await axios.post(`${API_URL}/users`, {
         username: `testuser_${Date.now()}`,
         email: `test_${Date.now()}@test.com`,
@@ -60,7 +56,6 @@ const tests = {
       }).catch(e => e.response);
       tests.log("User registration", registerRes.status === 201, registerRes.data?.message || "");
 
-      // Login
       const loginRes = await axios.post(`${API_URL}/users/auth`, {
         email: `test_${Date.now() - 1000}@test.com`,
         password: "Test@1234"
