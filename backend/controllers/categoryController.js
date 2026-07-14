@@ -3,7 +3,6 @@ import Product from "../models/productModel.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import { isDatabaseUnavailable } from "../utils/dbFallback.js";
 
-// GET ALL
 const getCategories = asyncHandler(async (req, res) => {
   try {
     const categories = await Category.find({}).sort({ name: 1 });
@@ -17,7 +16,6 @@ const getCategories = asyncHandler(async (req, res) => {
   }
 });
 
-// CREATE
 const createCategory = asyncHandler(async (req, res) => {
   const { name } = req.body;
 
@@ -44,7 +42,6 @@ const createCategory = asyncHandler(async (req, res) => {
   res.status(201).json(category);
 });
 
-// UPDATE
 const updateCategory = asyncHandler(async (req, res) => {
   const category = await Category.findById(req.params.id);
 
@@ -76,7 +73,6 @@ const updateCategory = asyncHandler(async (req, res) => {
   res.json(updated);
 });
 
-// DELETE SAFE
 const deleteCategory = asyncHandler(async (req, res) => {
   const category = await Category.findById(req.params.id);
 
