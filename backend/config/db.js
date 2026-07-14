@@ -1,22 +1,23 @@
 import mongoose from "mongoose";
 
 const normalizeMongoUri = (mongoUri) => {
-  if (!mongoUri || !/^mongodb(?:\+srv)?:\/\//i.test(mongoUri)) {
-    return mongoUri;
-  }
+  if (!mongoUri || !/^mongodb(?:\+srv)?:\/\//i.test(mongoUri)) {
+    return mongoUri;
+  }
 
-  try {
-    const parsed = new URL(mongoUri);
-    const dbName = parsed.pathname.replace(/^\//, "").split("?")[0];
+  try {
+    const parsed = new URL(mongoUri);
+    const dbName = parsed.pathname.replace(/^\//, "").split("?")[0];
 
-    if (dbName) {
-      parsed.pathname = `/${dbName.toLowerCase()}`;
-      return parsed.toString();
-    }
-  } catch {
+    if (dbName) {
+      parsed.pathname = `/${dbName.toLowerCase()}`;
+      return parsed.toString();
+    }
+  } catch (error) {
+    console.warn(`Unable to normalize MongoDB URI: ${error.message}`);
+  }
 
-
-  return mongoUri;
+  return mongoUri;
 };
 
 const connectDB = async () => {
